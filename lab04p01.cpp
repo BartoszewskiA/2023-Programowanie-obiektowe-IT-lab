@@ -1,5 +1,6 @@
 #include <iostream>
 #include <math.h>
+#include <sstream>
 
 using namespace std;
 
@@ -23,31 +24,36 @@ public:
         double delta = (getB() * getB()) - 4 * getA() * getC();
         return delta;
     }
-    double getX1()
+    string getX1()
     {
         if (getDelta() < 0)
         {
-            return 0;
+            return "";
         }
         else
         {
             double x1 = (-getB() - sqrt(getDelta())) / 2 * getA();
-            return x1;
+            stringstream s;
+            s << x1;
+            return s.str();
         }
     }
-    double getX2()
+    string getX2()
     {
         if (getDelta() <= 0)
         {
-            cout << "Delta mniejsza lub rowna zero";
-            return 0;
+            return "";
         }
         else
         {
             double x2 = (-getB() + sqrt(getDelta())) / 2 * getA();
-            return x2;
+            stringstream s;
+            s << x2;
+            return s.str();
         }
     }
+    
+
     // void getX1()
     // {
     //     if (getDelta() < 0)
@@ -77,20 +83,8 @@ public:
 
 int main()
 {
-    Kwadratowe row1;
-    row1.setA(1);
-    row1.setB(2);
-    row1.setC(1);
-    cout << "A= " << row1.getA() << "\nB= " << row1.getB() << "\nC= " << row1.getC() << endl;
-    cout << "Delta = " << row1.getDelta() << endl;
-    row1.getX1();
-    row1.getX2();
-    // cout << "x1 = " << row1.getX1() << endl;
-    // cout << "x2 = " << row1.getX2() << endl;
-    Kwadratowe row2(2, 4, 6);
-    cout << "A= " << row2.getA() << "\nB= " << row2.getB() << "\nC= " << row2.getC() << endl;
-    cout << "Delta = " << row2.getDelta() << endl;
-    row2.getX1();
-    row2.getX2();
+    Kwadratowe row1(1, 2, -11);
+    cout << row1.getDelta() << " " << row1.getX1() << " " << row1.getX2();
+
     return 0;
 }

@@ -27,7 +27,11 @@ public:
         else
             return "kotek jest zywy";
     }
+
+    
 };
+
+
 
 int main()
 {
