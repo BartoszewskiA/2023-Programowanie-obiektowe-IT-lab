@@ -68,24 +68,42 @@ ostream &operator<<(ostream &str, Lz obiekt)
     return str;
 }
 
-istream &operator>>(istream &str, Lz& obiekt)
+istream &operator>>(istream &str, Lz &obiekt)
 {
     string s;
     cin >> s;
     double a = 0,
            b = 0;
     int poz_i = s.find('i');
-    if (poz_i < 0)
+    if (poz_i < 0) // tylko czesc rzeczywista
         a = atof(s.c_str());
-    else
+    else // takze urojona
     {
         s = s.substr(0, s.length() - 1); // obcinam ostatni znak "i"
         int poz_plus = s.find('+');
         int poz_minus = s.find('-');
-        if (poz_plus < 0 && poz_minus <= 0)
+        int poz_dr_min = s.find('-',1);
+        if (poz_plus < 0 && poz_minus <= 0 && poz_dr_min < 0) // tylko urojona
             b = atof(s.c_str());
+        else // obie
+        {
+            if (poz_plus > 0) // a+b i -a+b
+            {
+                a = atof(s.substr(0, poz_plus).c_str());
+                b = atof(s.substr(poz_plus, s.length() - poz_plus).c_str());
+            }
+            else if (poz_dr_min > 0) //-a-b
+            {
+                a = atof(s.substr(0, poz_dr_min).c_str());
+                b = atof(s.substr(poz_dr_min, s.length() - poz_dr_min).c_str());
+            }
+            else // a-b
+            {
+                a = atof(s.substr(0, poz_minus).c_str());
+                b = atof(s.substr(poz_minus, s.length() - poz_minus).c_str());
+            }
+        }
     }
-
     obiekt.setA(a);
     obiekt.setB(b);
     return str;
